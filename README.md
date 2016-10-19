@@ -1,2 +1,2 @@
 # EasyList
-The template of a simple chain list.
+Doubly linked list for C
