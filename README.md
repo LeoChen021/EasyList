@@ -1,2 +1,1 @@
-# EasyList
-Doubly linked list for C
+# Doubly Linked List for C

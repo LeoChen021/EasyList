@@ -181,6 +181,48 @@ void list_add_front( void *pvListEntry, void *pvNode )
 }
 
 /**************************************************************************//**
+ * @fn          list_insert_before
+ * @param [in]  pvNodeA - Pointer to a node.
+ * @param [in]  pvNodeB - Pointer to the node to be inserted.
+ * @return      None
+ * @brief       Insert a node before another node.
+ *****************************************************************************/
+void list_insert_before( void *pvNodeA, void *pvNodeB )
+{
+    node_head_t *psHeadA = _TO_HEAD_ADDR(pvNodeA);
+    node_head_t *psHeadB = _TO_HEAD_ADDR(pvNodeB);
+    if( _IS_USED_NODE(psHeadA) && _IS_IDLE_NODE(psHeadB) ) {
+        psHeadB->m_psList = psHeadA->m_psList;
+        psHeadB->m_psNext = (void *)psHeadA;
+        psHeadB->m_psPrev = psHeadA->m_psPrev;
+        psHeadA->m_psPrev->m_stHead.m_psNext = (void *)psHeadB;
+        psHeadA->m_psPrev = (void *)psHeadB;
+        psHeadA->m_psList->m_uiSize++;
+    }
+}
+
+/**************************************************************************//**
+ * @fn          ilst_insert_after
+ * @param [in]  pvNodeA - Pointer to a node.
+ * @param [in]  pvNodeB - Pointer to the node to be inserted.
+ * @return      None
+ * @brief       Insert a node after another node.
+ *****************************************************************************/
+void ilst_insert_after( void *pvNodeA, void *pvNodeB )
+{
+    node_head_t *psHeadA = _TO_HEAD_ADDR(pvNodeA);
+    node_head_t *psHeadB = _TO_HEAD_ADDR(pvNodeB);
+    if( _IS_USED_NODE(psHeadA) && _IS_IDLE_NODE(psHeadB) ) {
+        psHeadB->m_psList = psHeadA->m_psList;
+        psHeadB->m_psPrev = (void *)psHeadA;
+        psHeadB->m_psNext = psHeadA->m_psNext;
+        psHeadA->m_psNext->m_stHead.m_psPrev = (void *)psHeadB;
+        psHeadA->m_psNext = (void *)psHeadB;
+        psHeadA->m_psList->m_uiSize++;
+    }
+}
+
+/**************************************************************************//**
  * @fn          list_node_del
  * @param [in]  pvNode - Pointer to a node.
  * @return      None
@@ -265,6 +307,18 @@ void *list_node_prev( void *pvNode )
 }
 
 /**************************************************************************//**
+ * @fn          list_length
+ * @param [in]  pvListEntry - List handle
+ * @return      The number of nodes in the list.
+ * @brief       Get the number of nodes in a list.
+ *****************************************************************************/
+uint32_t list_length( void *pvListEntry )
+{
+    list_entry_t *psList = _TO_HEAD_ADDR(pvListEntry);
+    return _IS_ENTRY(psList)?psList->m_uiSize:0;
+}
+
+/**************************************************************************//**
  * @fn          list_flush
  * @param [in]  pvListEntry - List handle
  * @return      None
@@ -305,18 +359,6 @@ void list_destroy( void *pvListEntry )
         }
     }
     free( psList );
-}
-
-/**************************************************************************//**
- * @fn          list_length
- * @param [in]  pvListEntry - List handle
- * @return      The number of nodes in the list.
- * @brief       Get the number of nodes in a list.
- *****************************************************************************/
-uint32_t list_length( void *pvListEntry )
-{
-    list_entry_t *psList = _TO_HEAD_ADDR(pvListEntry);
-    return _IS_ENTRY(psList)?psList->m_uiSize:0;
 }
 
 /******************************************************************************

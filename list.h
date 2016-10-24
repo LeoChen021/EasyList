@@ -97,6 +97,24 @@ void list_add_rear( void *pvListEntry, void *pvNode );
 void list_add_front( void *pvListEntry, void *pvNode );
 
 /**************************************************************************//**
+ * @fn          list_insert_before
+ * @param [in]  pvNodeA - Pointer to a node.
+ * @param [in]  pvNodeB - Pointer to the node to be inserted.
+ * @return      None
+ * @brief       Insert a node before another node.
+ *****************************************************************************/
+void list_insert_before( void *pvNodeA, void *pvNodeB );
+
+/**************************************************************************//**
+ * @fn          ilst_insert_after
+ * @param [in]  pvNodeA - Pointer to a node.
+ * @param [in]  pvNodeB - Pointer to the node to be inserted.
+ * @return      None
+ * @brief       Insert a node after another node.
+ *****************************************************************************/
+void ilst_insert_after( void *pvNodeA, void *pvNodeB );
+
+/**************************************************************************//**
  * @fn          list_node_del
  * @param [in]  pvNode - Pointer to a node.
  * @return      None
@@ -146,6 +164,14 @@ void *list_node_next( void *pvNode );
 void *list_node_prev( void *pvNode );
 
 /**************************************************************************//**
+ * @fn          list_length
+ * @param [in]  pvListEntry - List handle
+ * @return      The number of nodes in the list.
+ * @brief       Get the number of nodes in a list.
+ *****************************************************************************/
+uint32_t list_length( void *pvListEntry );
+
+/**************************************************************************//**
  * @fn          list_flush
  * @param [in]  pvListEntry - List handle
  * @return      None
@@ -160,14 +186,6 @@ void list_flush( void *pvListEntry );
  * @brief       Free the list including all nodes in it.
  *****************************************************************************/
 void list_destroy( void *pvListEntry );
-
-/**************************************************************************//**
- * @fn          list_length
- * @param [in]  pvListEntry - List handle
- * @return      The number of nodes in the list.
- * @brief       Get the number of nodes in a list.
- *****************************************************************************/
-uint32_t list_length( void *pvListEntry );
 
 #endif /* _LIST_H_ */
 /******************************************************************************
